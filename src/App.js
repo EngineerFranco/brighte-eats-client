@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Headers from './components/Headers';
+import Footer from './components/Footer';
+import { Outlet } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+
+// Create the Apollo Client
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql', 
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='bg-green-50/60 h-[100dvh]'>
+      <Toaster />
+      <Headers />
+      <ApolloProvider client={client}>
+        <Outlet />
+      </ApolloProvider>
+      <Footer />
     </div>
   );
 }
